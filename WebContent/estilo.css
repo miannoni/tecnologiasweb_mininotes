@@ -1,0 +1,21 @@
+@charset "ISO-8859-1";
+
+div a{    
+	text-align:center;
+	color: #3B7F66;   /* cor do texto */
+}
+
+.container{
+	border-radius: 20px;      /* arredonda a borda */
+}
+.corfundo{
+	background: #ab92e8;
+}
+.corprojetos{
+	margin:30px;
+	background:radial-gradient(#3B7F66,#6CE5B9);     /* cor das caixas */
+}
+.center{
+	display: block;
+	text-align: -webkit-center;
+}
