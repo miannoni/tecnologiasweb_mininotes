@@ -1,10 +1,6 @@
 package projeto1;
 
 import java.io.*;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +8,8 @@ import javax.servlet.http.*;
 
 @WebServlet("/atualiza")
 public class Atualiza extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response)

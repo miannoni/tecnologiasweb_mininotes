@@ -5,8 +5,8 @@ div a{
 	color: #3B7F66;   /* cor do texto */
 }
 
-.container{
-	border-radius: 20px;      /* arredonda a borda */
+.container {
+    padding: 2px 16px;
 }
 .corfundo{
 	background: #ab92e8;
@@ -18,4 +18,9 @@ div a{
 .center{
 	display: block;
 	text-align: -webkit-center;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 40%;
 }

@@ -9,23 +9,33 @@
 	</head>
 	
 	<body class="corfundo">
+		<%@ page import="java.util.*,projeto1.*"%>
 		<div class="center">
-			<form action="/action_page.php">		
+			<form action="cria" method="post">
 				<h1>NOVA NOTA:</h1>
-				<textarea rows="6" cols="60" id="caixa_notas"></textarea>
+				<label for=titulo>Título:</label>
 				<br>
-				<p>Cor:</p>
-				<select>
-					<option value="vermelho">Vermelho</option>
-					<option value="azul">Azul</option>
-					<option value="rosa">Rosa</option>
-					<option value="amarelo">Amarelo</option>
-					<option value="verde">Verde</option>
-				</select>
-	
+				<textarea rows="2" cols="60" id="titulo" name="titulo"></textarea>
+				<br>
+				<label for=texto>Nota:</label>
+				<br>
+				<textarea rows="6" cols="60" id="texto" name="texto"></textarea>	
 				<br><br>
 				<input type="submit" value="Submit">
 			</form>
 		</div>
+		<%
+			DAO dao = new DAO();
+			List<Notas> notas = dao.getLista();
+			
+			for (Notas nota : notas) {
+		%>
+		<div class="card">
+  			<div class="container row">
+    			<h4><b><%= nota.getTitulo() %></b></h4> 
+    			<p contenteditable="true"> <%= nota.getTexto() %> </p> 
+  			</div>
+		</div>
+		<% } %>
 	</body>
 </html>
