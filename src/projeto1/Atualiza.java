@@ -12,8 +12,7 @@ public class Atualiza extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response)
-	throws ServletException, IOException {
+			HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		out.println("<html><body>");
 		out.println("<form method='post'>");
@@ -26,19 +25,14 @@ public class Atualiza extends HttpServlet {
 	}
 	@Override
 	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response)
-	throws ServletException, IOException {
+			HttpServletResponse response) throws ServletException, IOException {
 		DAO dao = new DAO();
 		Notas nota = new Notas();
 		nota.setId(Integer.valueOf(request.getParameter("id")));
 		nota.setTitulo(request.getParameter("titulo"));
 		nota.setTexto(request.getParameter("texto"));
 		dao.altera(nota);
-		PrintWriter out = response.getWriter();
-		out.println("<html><body>");
-		out.println("atualizado" + nota.getTitulo());
-		out.println("atualizado" + nota.getTexto());
-		out.println("</body></html>");
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 		dao.close();
 	}
 }

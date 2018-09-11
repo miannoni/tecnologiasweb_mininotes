@@ -33,6 +33,7 @@ public class Remove extends HttpServlet {
 		out.println("<html><body>");
 		out.println("removido");
 		out.println("</body></html>");
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 		dao.close();
 	}
 }
