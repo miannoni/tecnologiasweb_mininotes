@@ -7,12 +7,12 @@
 		<title>MiniNotes</title>
 		<link rel='stylesheet' type='text/css' href='estilo.css'>
 	</head>
+	<div class="header center navcolor"><h1>MiniNotes</h1></div>
 	
 	<body class="corfundo">
 		<%@ page import="java.util.*,projeto1.*"%>
 		<div class="center">
 			<form action="cria" method="post">
-				<h1>NOVA NOTA:</h1>
 				<label for=titulo>Título:</label>
 				<br>
 				<textarea rows="2" cols="60" id="titulo" name="titulo"></textarea>
@@ -30,11 +30,14 @@
 			
 			for (Notas nota : notas) {
 		%>
-		<div class="card">
-  			<div class="container row">
-    			<h4><b><%= nota.getTitulo() %></b></h4> 
-    			<p contenteditable="true"> <%= nota.getTexto() %> </p> 
+		<div class="card" id = <%= nota.getId() %> >
+  			<div class="container">
+    			<h4 id="titulo"><b><%= nota.getTitulo() %></b></h4> 
+    			<p id="texto" contenteditable="true"> <%= nota.getTexto() %> </p> 
   			</div>
+  			<div class="card-action">
+				<a href="atualiza">Editar</a> <a href="remove">Descartar</a>
+			</div>
 		</div>
 		<% } %>
 	</body>

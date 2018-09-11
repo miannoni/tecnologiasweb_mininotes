@@ -9,8 +9,11 @@ div a{
     padding: 2px 16px;
 }
 .corfundo{
-	background: #ab92e8;
+	background: #B9A7E8;
 }
+.navcolor {
+	background-color: #A081E8;
+}  
 .corprojetos{
 	margin:30px;
 	background:radial-gradient(#3B7F66,#6CE5B9);     /* cor das caixas */
