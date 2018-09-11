@@ -30,13 +30,21 @@
 			
 			for (Notas nota : notas) {
 		%>
-		<div class="card" id = <%= nota.getId() %> >
+		<div class="card" >
   			<div class="container">
     			<h4 id="titulo"><b><%= nota.getTitulo() %></b></h4> 
     			<p id="texto" contenteditable="true"> <%= nota.getTexto() %> </p> 
   			</div>
   			<div class="card-action">
-				<a href="atualiza">Editar</a> <a href="remove">Descartar</a>
+  				<form action="atualiza">
+  					<input type="text" name="id" value="<%= nota.getId() %>" style="display: none">
+  					<input type="submit" value="Editar">
+  				</form>
+  				<form action="remove">
+  					<input type="text" name="id" value="<%= nota.getId() %>" style="display: none">
+  					<input type="submit" value="Descartar">
+  				</form>
+  				
 			</div>
 		</div>
 		<% } %>

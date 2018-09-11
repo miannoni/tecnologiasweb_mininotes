@@ -14,26 +14,16 @@ public class Remove extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 	HttpServletResponse response)
 	throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
-		out.println("<html><body>");
-		out.println("<form method='post'>");
-		out.println("Remover ID: <input type='number' name='id'><br>");
-		out.println("<input type='submit' value='Submit'>");
-		out.println("</form>");
-		out.println("<body><html>");
+		DAO dao = new DAO();
+		dao.remove(Integer.valueOf(request.getParameter("id")));
+		dao.close();
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request,
 	HttpServletResponse response)
 	throws ServletException, IOException {
-		DAO dao = new DAO();
-		dao.remove(Integer.valueOf(request.getParameter("id")));
-		PrintWriter out = response.getWriter();
-		out.println("<html><body>");
-		out.println("removido");
-		out.println("</body></html>");
-		request.getRequestDispatcher("index.jsp").forward(request, response);
-		dao.close();
+		
 	}
 }
