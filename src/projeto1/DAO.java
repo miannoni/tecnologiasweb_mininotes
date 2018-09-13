@@ -39,6 +39,7 @@ public class DAO {
 					nota.setId(rs.getInt("id"));
 					nota.setTitulo(rs.getString("titulo"));
 					nota.setTexto(rs.getString("texto"));
+					nota.setId_cor(rs.getString("id_cor"));
 					notas.add(nota);
 				}
 				
@@ -50,22 +51,53 @@ public class DAO {
 			}
 			return notas;
 		}
-	public void close() {
+	
+	public List<Cores> getListaCores() {
+		List<Cores> cores = new ArrayList<Cores>();
+		PreparedStatement stmt;
 		try {
-			connection.close();
+			stmt = connection.
+				prepareStatement("SELECT * FROM Cores");
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				Cores cor = new Cores();
+				cor.setId_cor(rs.getInt("id_cor"));
+				cor.setCores(rs.getString("cores"));
+				cores.add(cor);
+			}
+			
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cores;
+	}
+	
+	public void adiciona(Notas nota) {
+		String sql = "INSERT INTO Notas" +
+		"(titulo,texto,id_cor) values(?,?,?)";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1,nota.getTitulo());
+			stmt.setString(2,nota.getTexto());
+			stmt.setString(3,nota.getId_cor());
+			stmt.execute();
+			stmt.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void adiciona(Notas nota) {
-		String sql = "INSERT INTO Notas" +
-		"(titulo,texto) values(?,?)";
+	public void adicionaCores(Cores cor) {
+		String sql = "INSERT INTO Cores" +
+		"(cores) values(?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1,nota.getTitulo());
-			stmt.setString(2,nota.getTexto());
+			stmt.setString(1,cor.getCores());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -76,12 +108,28 @@ public class DAO {
 	
 	public void altera(Notas nota) {
 		String sql = "UPDATE Notas SET " +
-		 "titulo=?, texto=? WHERE id=?";
+		 "titulo=?, texto=?, id_cor=? WHERE id=?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, nota.getTitulo());
 			stmt.setString(2, nota.getTexto());
-			stmt.setInt(3, nota.getId());
+			stmt.setString(3, nota.getId_cor());
+			stmt.setInt(4, nota.getId());
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void alteraCores(Cores cor) {
+		String sql = "UPDATE Cores SET " +
+		 "cores=? WHERE id_cor=?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, cor.getCores());
+			stmt.setInt(2, cor.getId_cor());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -98,6 +146,42 @@ public class DAO {
 			stmt.setLong(1, id);
 			stmt.execute();
 			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void removeCores(Integer id_cor) {
+		PreparedStatement stmt;
+		try {
+			stmt = connection
+			 .prepareStatement("DELETE FROM Cores WHERE id_cor=?");
+			stmt.setLong(1, id_cor);
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void idToColor(String id_cor) {
+		String sql = "SELECT cores FROM Cores WHERE id_cor=?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, id_cor);
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void close() {
+		try {
+			connection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

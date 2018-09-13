@@ -6,8 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-@WebServlet("/cria")
-public class Cria extends HttpServlet {
+@WebServlet("/criaCores")
+public class CriaCores extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@Override
@@ -21,11 +21,9 @@ public class Cria extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		
 		DAO dao = new DAO();
-		Notas nota = new Notas();
-		nota.setTitulo(request.getParameter("titulo"));
-		nota.setTexto(request.getParameter("texto"));
-		nota.setId_cor(request.getParameter("id_cor"));
-		dao.adiciona(nota);
+		Cores cor = new Cores();
+		cor.setCores(request.getParameter("cores"));
+		dao.adicionaCores(cor);
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 		dao.close();
 		
