@@ -17,14 +17,14 @@
 			<div class='col-5'>
 				<h3>Cores salvas:</h3>
 				<%
-					String corNota = "#ffffff";
+					String corNota = "1";
 					
 					DAO dao = new DAO();
 					List<Cores> cores = dao.getListaCores();
 					
 					for (Cores cor : cores) {
 				%>
-				<button onclick="" class="botaocor" style="background-color: <%= cor.getCores() %>"></button>
+				<button onclick='' class="botaocor" style="background-color: <%= cor.getCores() %>"></button>
 				
 				<% } %>
 				
@@ -36,12 +36,11 @@
 				
 			</div>
 			
-			
 			<div class="center">
 				<form action="cria" method="post">
 					<label for=titulo>Título:</label>
 					<br>
-					<input type="text" name="id_cor" value="<%= corNota %>" style="display: none">
+					<input type="text" name="id_cor" value= <%= corNota %> id="tgref" style="display: none">
 					<textarea rows="2" cols="60" id="titulo" name="titulo"></textarea>
 					<br>
 					<label for=texto>Nota:</label>
@@ -59,11 +58,17 @@
 		<%
 			List<Notas> notas = dao.getLista();
 			
+			String corFundo = "#ffffff";
+		
 			for (Notas nota : notas) {
+				for (Cores cor : cores) {
+					if (Integer.valueOf(nota.getId_cor()) == cor.getId_cor()){
+						corFundo = cor.getCores();
+					}}
 				
 		%>
-		<div id="nota-<%= nota.getId() %>"class="card mr-1 ml-1 mb-2" style="background-color: <%= nota.getId_cor() %>">
-		
+		<div id="<%= nota.getId() %>"class="card mr-1 ml-1 mb-2" style="background-color: <%= corFundo %>">
+
   			<div class="container">
     			<h4 id="titulo"><b><%= nota.getTitulo() %></b></h4> 
     			<p id="texto" contenteditable="true"> <%= nota.getTexto() %> </p> 
@@ -90,16 +95,12 @@
 					    <div class="modal-body">
 					    	<h1>Escolha uma cor:</h1>
 					    	
-					    	<!-- <form> -->
-							    <% for (Cores cor : cores) {
-								%>
+							   <% for (Cores cor : cores) { %>
 								<div class="botaocorwrapper">
-									<span class="botaocor" color="<%= cor.getCores() %>"  nota-id="<%= nota.getId() %>" style= "background-color: <%= cor.getCores() %>" ></span>
-
-								</div>
-								<% } %>
+									<span class="botaocor botaoCorAcao" id_cor="<%= cor.getId_cor() %>"  id="<%= nota.getId() %>" style= "background-color: <%= cor.getCores() %>" ></span>
+								</div>		
+								<% }%>
 								
-							<!-- </form> -->
 							<br><br>
 							<form action=" " method="post">
 								<input type="button" value="Adicionar">
@@ -112,28 +113,34 @@
 		</div> 
 		<% } %>
 		
-		<script type="text/javascript">
-			botoes = document.getElementsByClassName("botaocor")
-			botoes = [...botoes]
+		<script>
+			botoes = document.getElementsByClassName("botaoCorAcao")
+			botoes =  [...botoes]
 			botoes.forEach((botao) => {
 				botao.addEventListener('click', (cb) => {
 					elemento = cb.target
-					cor = cb.target.getAttribute("color")
-					id = cb.target.getAttribute("nota-id")
-					console.log(cor, id)
-					url = `atualizaCores`
-					fd = new FormData()
-					fd.append("cores", cor)
-					console.log(url)
-					fetch(url , {
-						method: "POST",
-						body: fd
+					id_cor = cb.target.getAttribute("id_cor")
+					id = cb.target.getAttribute("id")
+					console.log(id_cor, id)
+					url = `coloreNota`
+					//fd = new FormData()
+					//fd.append("id_cor", id_cor)
+					fetch(url + "?id_cor=" + id_cor + "&id=" + id , {
+						method: "POST"
 					})
 				})
 			})
-		</script>
-		
-		<script>
+			
+			
+			//var corInicio;
+			//function corInicial(cor){
+			//	corInicio = cor;
+			//    console.log("RRRRRRRRRR"+corInicio)
+			//}
+			
+			//document.getElementById("tgref").setAttribute('value','3');
+			//console.log(document.getElementById("tgref").value)
+
 			// Get the modal
 			var modal = document.getElementById('myModal');
 			

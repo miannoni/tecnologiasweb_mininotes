@@ -106,6 +106,21 @@ public class DAO {
 		}
 	}
 	
+	public void coloreNota(Notas nota) {
+		String sql = "UPDATE Notas SET " +
+				 "id_cor=? WHERE id=?";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, nota.getId_cor());
+			stmt.setInt(2,nota.getId());
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void altera(Notas nota) {
 		String sql = "UPDATE Notas SET " +
 		 "titulo=?, texto=?, id_cor=? WHERE id=?";

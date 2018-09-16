@@ -16,6 +16,7 @@
     width: 32.7%;
     float:left;
 }
+
 .botaocor {
     border: none;
     padding: 8px;
@@ -26,6 +27,7 @@
     cursor: pointer;
     border-radius: 50%;
 }
+
 
 #inputcolor {
   -webkit-appearance: none;
