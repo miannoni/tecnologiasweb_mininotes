@@ -24,7 +24,7 @@
 					
 					for (Cores cor : cores) {
 				%>
-				<button onclick='' class="botaocor" style="background-color: <%= cor.getCores() %>"></button>
+				<button onclick='corInicial(<%= cor.getId_cor() %>)' class="botaocor" style="background-color: <%= cor.getCores() %>"></button>
 				
 				<% } %>
 				
@@ -132,14 +132,9 @@
 			})
 			
 			
-			//var corInicio;
-			//function corInicial(cor){
-			//	corInicio = cor;
-			//    console.log("RRRRRRRRRR"+corInicio)
-			//}
-			
-			//document.getElementById("tgref").setAttribute('value','3');
-			//console.log(document.getElementById("tgref").value)
+			function corInicial(cor){
+			    document.getElementById("tgref").setAttribute('value',cor);
+			}
 
 			// Get the modal
 			var modal = document.getElementById('myModal');
