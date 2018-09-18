@@ -13,21 +13,23 @@ public class Cria extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
+		DAO dao = new DAO();
+		Notas nota = new Notas();
+		Cores cor = new Cores();
+		nota.setTitulo(request.getParameter("titulo"));
+		nota.setTexto(request.getParameter("texto"));
+		cor.setCores(request.getParameter("cores"));
+		nota.setId_cor(dao.if_cor_get_else_cria(cor));
+		dao.adiciona(nota);
+		dao.close();
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		DAO dao = new DAO();
-		Notas nota = new Notas();
-		nota.setTitulo(request.getParameter("titulo"));
-		nota.setTexto(request.getParameter("texto"));
-		nota.setId_cor(request.getParameter("id_cor"));
-		dao.adiciona(nota);
 		request.getRequestDispatcher("index.jsp").forward(request, response);
-		dao.close();
 		
 	}
 	

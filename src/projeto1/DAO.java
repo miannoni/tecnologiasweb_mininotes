@@ -12,14 +12,14 @@ public class DAO {
 	private Connection connection = null;
 	public DAO() {
 		 try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		 try {
 			connection = DriverManager.getConnection(
-			"jdbc:mysql://localhost/teste", "root", "Gbp_1806");
+			"jdbc:mysql://localhost/teste", "root", "1Iannoni!");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -39,7 +39,7 @@ public class DAO {
 					nota.setId(rs.getInt("id"));
 					nota.setTitulo(rs.getString("titulo"));
 					nota.setTexto(rs.getString("texto"));
-					nota.setId_cor(rs.getString("id_cor"));
+					nota.setId_cor(rs.getInt("id_cor"));
 					notas.add(nota);
 				}
 				
@@ -81,9 +81,9 @@ public class DAO {
 		"(titulo,texto,id_cor) values(?,?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1,nota.getTitulo());
-			stmt.setString(2,nota.getTexto());
-			stmt.setString(3,nota.getId_cor());
+			stmt.setString(1, nota.getTitulo());
+			stmt.setString(2, nota.getTexto());
+			stmt.setInt(3, nota.getId_cor());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -92,17 +92,85 @@ public class DAO {
 		}
 	}
 	
-	public void adicionaCores(Cores cor) {
-		String sql = "INSERT INTO Cores" +
-		"(cores) values(?)";
+	public Integer if_cor_get_else_cria(Cores cor) {
+		Integer resposta = 0;
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1,cor.getCores());
-			stmt.execute();
-			stmt.close();
-		} catch (SQLException e) {
+			PreparedStatement stmt1 = connection.prepareStatement("SELECT * FROM Cores WHERE cores='" + cor.getCores() + "'");
+			
+			ResultSet rs = stmt1.executeQuery();
+			
+			boolean val = rs.next();
+			
+			if (val == false) {
+				String sql = "INSERT INTO Cores (cores) values(?)";
+				PreparedStatement stmt2 = connection.prepareStatement(sql);
+				stmt2.setString(1, cor.getCores());
+				stmt2.execute();
+				stmt2.close();
+			}
+			
+			PreparedStatement stmt3 = connection.prepareStatement("SELECT * FROM Cores WHERE cores='" + cor.getCores() + "'");
+			ResultSet rs1 = stmt3.executeQuery();
+			
+			boolean val2 = rs1.next();
+			
+			if (val2 == true) {
+				resposta = rs1.getInt("id_cor");
+				return resposta;
+			}
+			
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
+		}
+		
+		
+		return resposta;
+	}
+	
+	public String if_cor_get(Cores cor) {
+		String resposta = "#ffffff";
+		try {
+			PreparedStatement stmt1 = connection.prepareStatement("SELECT * FROM Cores WHERE id_cor='" + cor.getCores() + "'");
+			
+			ResultSet rs = stmt1.executeQuery();
+			
+			boolean val = rs.next();
+			
+			if (val == true) {
+				resposta = rs.getString("cores");
+				return resposta;
+			}
+			
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		return resposta;
+	}
+	
+	public void if_not_cor_cria(Cores cor) {
+		
+		try {
+			PreparedStatement stmt1 = connection.prepareStatement("SELECT * FROM Cores WHERE cores='" + cor.getCores() + "'");
+			
+			ResultSet rs = stmt1.executeQuery();
+			
+			boolean val = rs.next();
+			
+			if (val == false) {
+				String sql = "INSERT INTO Cores (cores) values(?)";
+				PreparedStatement stmt2 = connection.prepareStatement(sql);
+				stmt2.setString(1, cor.getCores());
+				stmt2.execute();
+				stmt2.close();
+			}
+			
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 	
@@ -111,8 +179,8 @@ public class DAO {
 				 "id_cor=? WHERE id=?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, nota.getId_cor());
-			stmt.setInt(2,nota.getId());
+			stmt.setInt(1, nota.getId_cor());
+			stmt.setInt(2, nota.getId());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -128,7 +196,7 @@ public class DAO {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, nota.getTitulo());
 			stmt.setString(2, nota.getTexto());
-			stmt.setString(3, nota.getId_cor());
+			stmt.setInt(3, nota.getId_cor());
 			stmt.setInt(4, nota.getId());
 			stmt.execute();
 			stmt.close();
@@ -140,7 +208,7 @@ public class DAO {
 	
 	public void alteraCores(Cores cor) {
 		String sql = "UPDATE Cores SET " +
-		 "cores=? WHERE id_cor=?";
+		 "cores=? WHERE id_cor=?z";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, cor.getCores());

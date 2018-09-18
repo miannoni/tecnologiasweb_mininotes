@@ -23,9 +23,9 @@ public class CriaCores extends HttpServlet {
 		DAO dao = new DAO();
 		Cores cor = new Cores();
 		cor.setCores(request.getParameter("cores"));
-		dao.adicionaCores(cor);
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		dao.if_not_cor_cria(cor);
 		dao.close();
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 		
 	}
 	
