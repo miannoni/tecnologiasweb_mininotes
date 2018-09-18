@@ -17,6 +17,7 @@ public class AtualizaCores extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String id_cor = request.getParameter("id_cor");
 		System.out.println(id_cor);
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 	
 	@Override
@@ -28,7 +29,7 @@ public class AtualizaCores extends HttpServlet {
 		cor.setCores(request.getParameter("cores"));
 		cor.setId_cor(id_cor);
 		dao.alteraCores(cor);
-		request.getRequestDispatcher("index.jsp").forward(request, response);
 		dao.close();
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 }
