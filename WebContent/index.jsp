@@ -74,17 +74,17 @@
   			<div class="card-action">
   				<form action="atualiza">
   					<input type="text" name="id_edit" id="id_edit" value="<%= nota.getId() %>" style="display: none">
-  					<input type="text" name="titulo" id="titulo" value="<%= nota.getTitulo() %>" style="background: transparent; border: none; font-weight: bold;"><br>
-  					<input type="text" name="texto" id="texto" value="<%= nota.getTexto() %>" style="background: transparent; border: none"><br>
+  					<input type="text" name="titulo" id="titulo" value="<%= nota.getTitulo() %>" style="background: transparent; border: none; width: 90%; height: 50%; margin-left: 3%; margin-top: 2%; overflow: scroll; font-weight: bold;"><br>
+  					<input type="text" name="texto" id="texto" value="<%= nota.getTexto() %>" style="background: transparent; border: none; width: 90%; padding: 20px 10px; line-height: 28px; box-sizing : border-box; overflow-wrap: break-word; margin-left: 3%;"><br>
   					<input type="text" name="id_cor" id="id_cor" value="<%= nota.getId_cor() %>" style="display: none">
-  					<input type="submit" value="Editar">
+  					<input style="float:left;" type="submit" value="Editar">
   				</form>
   				<form action="remove">
   					<input type="text" name="id" value="<%= nota.getId() %>" style="display: none">
-  					<input type="submit" value="Descartar">
+  					<input  style="float: left;" type="submit" value="Descartar">
   				</form>
   				
-  				<button id="myBtn<%= nota.getId() %>">Mudar Cor</button>
+  				<button style="float: left;" id="myBtn<%= nota.getId() %>">Mudar Cor</button>
   				<div id="myModal<%= nota.getId() %>" class="modal">
 
 				 	<!-- Modal content -->

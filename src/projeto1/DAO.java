@@ -12,14 +12,25 @@ public class DAO {
 	private Connection connection = null;
 	public DAO() {
 		 try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+//			Class.forName("com.mysql.cj.jdbc.Driver");com.mysql.jdbc.GoogleDriver
+			 Class.forName("com.mysql.jdbc.GoogleDriver");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		 try {
-			connection = DriverManager.getConnection(
-			"jdbc:mysql://localhost/teste", "root", "1Iannoni!");
+			
+			String databaseName = "teste";
+			String instanceConnectionName = "mininotes-216812:southamerica-east1:mininotessql";
+			String jdbcUrl = String.format(
+					    "jdbc:mysql://google/%s?cloudSqlInstance=%s"
+					        + "&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false",
+					    databaseName,
+					    instanceConnectionName);
+			
+			connection = DriverManager.getConnection(jdbcUrl, "root", "bananinha12345");
+//			connection = DriverManager.getConnection( //google/ -- 
+//			"jdbc:mysql://google/teste?cloudSqlInstance=mininotes-216812:southamerica-east1:mininotessql&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false", "root", "bananinha12345");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
