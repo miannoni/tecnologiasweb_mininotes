@@ -1,5 +1,19 @@
 @charset "ISO-8859-1";
-
+input[type="text"].texto
+{
+    background: transparent;
+    border: none;
+	width: 90%;
+	height: 50%;
+	left: 5%;
+}
+input[type="text"].titulo
+{
+    background: transparent;
+    border: none;
+	width: 90%;
+	left: 5%;
+}
 .corfundo{
 	background: #B9A7E8;
 }
