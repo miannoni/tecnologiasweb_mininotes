@@ -7,6 +7,7 @@
 		<title>MiniNotes</title>
 		<link rel='stylesheet' type='text/css' href='estilo.css'>
 		<link rel='stylesheet' type='text/css' href='bootstrap.css'>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 	<div class="header center navcolor"><h1>MiniNotes</h1></div>
 	
@@ -24,33 +25,36 @@
 					DAO dao = new DAO();
 					List<Cores> cores = dao.getListaCores();
 					
+					List<String> ListaCores = new ArrayList<>();
+					
 					for (Cores cor : cores) {
+						if (!ListaCores.contains(cor.getCores())){
+							ListaCores.add(cor.getCores());
 				%>
-				<button onclick='corInicial(<%= cor.getId_cor() %>)' class="botaocor" style="background-color: <%= cor.getCores() %>"></button>
+				<button onclick='corInicial(<%= cor.getId_cor() %>, "<%= cor.getCores() %>")' class="botaocor" style="background-color: <%= cor.getCores() %>"></button>
 				
-				<% } %>
+				<% }} %>
 				
 				<br><br>
 				<form action="criaCores" method="post">
 					<input type="color" id="inputcolor" name="cores" value="<%= r.rushBsuka() %>" />
-					<input type="submit" value="Adicionar">
+					<button type="submit" class="botaoSubmit" style="vertical-align:middle"><span>Adicionar Cor </span></button>
 				</form>
 				
 			</div>
 			
 			<div class="center">
 				<form action="cria" method="get">
-					<label for=titulo>Título:</label>
+					<label for=titulo>TÃ­tulo:</label>
 					<br>
-					<input type="text" id="tgref" style="display: none">
-					<textarea rows="2" cols="60" id="titulo" name="titulo"></textarea>
+					<input type="text" name="id_cor" value= <%= corNota %> id="corNotaComeco" style="display: none">
+					<textarea rows="2" cols="60" id="tituloCria" name="titulo"></textarea>
 					<br>
 					<label for=texto>Nota:</label>
 					<br>
-					<textarea rows="6" cols="60" id="texto" name="texto"></textarea>	
+					<textarea rows="6" cols="60" id="textoCria" name="texto"></textarea>	
 					<br>
-					<input type="color" id="id_cor" name="cores" value="<%= r.rushBsuka() %>" />
-					<input type="submit" value="Submit">
+					<button type="submit" class="botaoSubmit" style="vertical-align:middle"><span>Criar Nota </span></button>
 				</form>
 			</div>
 		</div>
@@ -77,14 +81,16 @@
   					<input type="text" name="titulo" id="titulo" value="<%= nota.getTitulo() %>" style="background: transparent; border: none; width: 90%; height: 50%; margin-left: 3%; margin-top: 2%; overflow: scroll; font-weight: bold;"><br>
   					<input type="text" name="texto" id="texto" value="<%= nota.getTexto() %>" style="background: transparent; border: none; width: 90%; padding: 20px 10px; line-height: 28px; box-sizing : border-box; overflow-wrap: break-word; margin-left: 3%;"><br>
   					<input type="text" name="id_cor" id="id_cor" value="<%= nota.getId_cor() %>" style="display: none">
-  					<input style="float:left;" type="submit" value="Editar">
+
+  					<button class="btn" style="float:left;" type="submit" value="Editar"><i class="fa fa-pencil"></i></button>
   				</form>
   				<form action="remove">
   					<input type="text" name="id" value="<%= nota.getId() %>" style="display: none">
-  					<input  style="float: left;" type="submit" value="Descartar">
+  					<button class="btn" style="float: left;" type="submit" value="Descartar"><i class="fa fa-trash"></i></button>
   				</form>
   				
-  				<button style="float: left;" id="myBtn<%= nota.getId() %>">Mudar Cor</button>
+  				<button class="btn" style="float: left;" id="myBtn<%= nota.getId() %>"><i class="fa fa-paint-brush"></i></button>
+
   				<div id="myModal<%= nota.getId() %>" class="modal">
 
 				 	<!-- Modal content -->
@@ -97,17 +103,26 @@
 					    	<h1>Escolha uma cor:</h1>
 					    	
 					    	
-							   <% for (Cores cor : cores) { %>
-								<div class="botaocorwrapper">
-									<form action="coloreNota" method="get">
-											<input type="text" name="id_cor" id="id_cor" value="<%= cor.getId_cor() %>" style="display: none">
-											<input type="text" name="id" id="id" value="<%= nota.getId() %>" style="display: none">
-											<input type="submit" value="" class="botaocor botaoCorAcao" style= "background-color: <%= cor.getCores() %>">
-									</form>
-								</div>		
-								<% }%>
+							   <% List<String> NovaListaCores = new ArrayList<>();
+							      for (Cores cor : cores) { 
+								   	if (!NovaListaCores.contains(cor.getCores())){
+										NovaListaCores.add(cor.getCores());%>
+										
+										<div class="botaowrapper">
+											<form action="coloreNota" method="get">
+												<input type="text" name="id_cor" id="id_cor" value="<%= cor.getId_cor() %>" style="display: none">
+												<input type="text" name="id" id="id" value="<%= nota.getId() %>" style="display: none">
+												<button type="submit" class="botaocor" style= "background-color: <%= cor.getCores() %>"></button>
+											</form>
+										</div>		
+								<% }}%>
 							
 							<br><br>
+							<form action="coloreNota" method="get">
+								<input type="text" name="id_cor" id="id_cor" value="<%= nota.getId_cor() %>" style="display: none">
+								<input type="text" name="id" id="id" value="<%= nota.getId() %>" style="display: none">
+								<button type="submit" class="botaoSubmit" style="vertical-align:middle"><span>Cancelar </span></button>
+							</form>
 					    </div>
 				    </div>
 				</div>
@@ -117,8 +132,10 @@
 		
 		<script>
 			
-			function corInicial(cor){
-			    document.getElementById("tgref").setAttribute('value',cor);
+			function corInicial(id_cor, cor){
+			    document.getElementById("corNotaComeco").setAttribute('value',id_cor);
+			    document.getElementById("tituloCria").style.background = cor;
+			    document.getElementById("textoCria").style.background = cor;
 			}
 
 			// Get the modal
@@ -131,10 +148,10 @@
 			var span = document.getElementsByClassName("close")[0];
 			
 			
-				// When the user clicks the button, open the modal 
-				btn<%= nota.getId() %>.onclick = function() {
-				    modal<%= nota.getId() %>.style.display = "block";
-				};
+			// When the user clicks the button, open the modal 
+			btn<%= nota.getId() %>.onclick = function() {
+			    modal<%= nota.getId() %>.style.display = "block";
+			};
 			
 			// When the user clicks on <span> (x), close the modal
 			span.onclick=function(){
