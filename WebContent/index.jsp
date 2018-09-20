@@ -45,7 +45,7 @@
 			
 			<div class="center">
 				<form action="cria" method="get">
-					<label for=titulo>Título:</label>
+					<label for=titulo>TÃ­tulo:</label>
 					<br>
 					<input type="text" name="id_cor" value= <%= corNota %> id="corNotaComeco" style="display: none">
 					<textarea rows="2" cols="60" id="tituloCria" name="titulo"></textarea>
@@ -81,6 +81,7 @@
   					<input type="text" name="titulo" id="titulo" value="<%= nota.getTitulo() %>" style="background: transparent; border: none; width: 90%; height: 50%; margin-left: 3%; margin-top: 2%; overflow: scroll; font-weight: bold;"><br>
   					<input type="text" name="texto" id="texto" value="<%= nota.getTexto() %>" style="background: transparent; border: none; width: 90%; padding: 20px 10px; line-height: 28px; box-sizing : border-box; overflow-wrap: break-word; margin-left: 3%;"><br>
   					<input type="text" name="id_cor" id="id_cor" value="<%= nota.getId_cor() %>" style="display: none">
+
   					<button class="btn" style="float:left;" type="submit" value="Editar"><i class="fa fa-pencil"></i></button>
   				</form>
   				<form action="remove">
@@ -89,6 +90,7 @@
   				</form>
   				
   				<button class="btn" style="float: left;" id="myBtn<%= nota.getId() %>"><i class="fa fa-paint-brush"></i></button>
+
   				<div id="myModal<%= nota.getId() %>" class="modal">
 
 				 	<!-- Modal content -->
