@@ -15,9 +15,8 @@ private static final long serialVersionUID = 1L;
 			HttpServletResponse response) throws ServletException, IOException {
 		DAO dao = new DAO();
 		Notas nota = new Notas();
-//		Cores cor = new Cores();
 		nota.setId(Integer.valueOf(request.getParameter("id")));
-		nota.setId_cor(Integer.valueOf(request.getParameter("id_cor")));
+		nota.setId_cor(request.getParameter("id_cor"));
 		dao.coloreNota(nota);
 		dao.close();
 		request.getRequestDispatcher("index.jsp").forward(request, response);

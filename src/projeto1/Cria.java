@@ -19,7 +19,7 @@ public class Cria extends HttpServlet {
 		nota.setTitulo(request.getParameter("titulo"));
 		nota.setTexto(request.getParameter("texto"));
 		cor.setCores(request.getParameter("cores"));
-		nota.setId_cor(dao.if_cor_get_else_cria(cor));
+		nota.setId_cor(request.getParameter("id_cor"));
 		dao.adiciona(nota);
 		dao.close();
 		request.getRequestDispatcher("index.jsp").forward(request, response);
