@@ -39,7 +39,7 @@ public class DAO {
 					nota.setId(rs.getInt("id"));
 					nota.setTitulo(rs.getString("titulo"));
 					nota.setTexto(rs.getString("texto"));
-					nota.setId_cor(rs.getInt("id_cor"));
+					nota.setId_cor(rs.getString("id_cor"));
 					notas.add(nota);
 				}
 				
@@ -74,22 +74,6 @@ public class DAO {
 			e.printStackTrace();
 		}
 		return cores;
-	}
-	
-	public void adiciona(Notas nota) {
-		String sql = "INSERT INTO Notas" +
-		"(titulo,texto,id_cor) values(?,?,?)";
-		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, nota.getTitulo());
-			stmt.setString(2, nota.getTexto());
-			stmt.setInt(3, nota.getId_cor());
-			stmt.execute();
-			stmt.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public Integer if_cor_get_else_cria(Cores cor) {
@@ -179,8 +163,24 @@ public class DAO {
 				 "id_cor=? WHERE id=?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, nota.getId_cor());
+			stmt.setString(1, nota.getId_cor());
 			stmt.setInt(2, nota.getId());
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void adiciona(Notas nota) {
+		String sql = "INSERT INTO Notas" +
+		"(titulo,texto,id_cor) values(?,?,?)";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1,nota.getTitulo());
+			stmt.setString(2,nota.getTexto());
+			stmt.setString(3,nota.getId_cor());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -196,7 +196,7 @@ public class DAO {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, nota.getTitulo());
 			stmt.setString(2, nota.getTexto());
-			stmt.setInt(3, nota.getId_cor());
+			stmt.setString(3, nota.getId_cor());
 			stmt.setInt(4, nota.getId());
 			stmt.execute();
 			stmt.close();
